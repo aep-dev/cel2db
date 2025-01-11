@@ -1,3 +1,4 @@
+[workspace]
 [package]
 name = "cel2db"
 version = "0.1.0"

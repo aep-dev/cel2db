@@ -23,3 +23,7 @@ Cargo.lock
 # Added by cargo
 
 /target
+bazel-bin
+bazel-cel2db
+bazel-out
+bazel-testlogs
