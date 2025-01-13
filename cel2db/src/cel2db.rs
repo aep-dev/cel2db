@@ -5,6 +5,9 @@ pub fn convert_expression(
     cel_expr: cel_ast::Expression,
 ) -> Result<sql_ast::Expr, Box<dyn std::error::Error>> {
     match cel_expr {
+        // cel_ast::Expression::FunctionCall(name, args) => {
+        //     convert_function_call(convert_expression(name)?, args)
+        // }
         cel_ast::Expression::And(left, right) => Ok(sql_ast::Expr::BinaryOp {
             left: Box::new(convert_expression(*left)?),
             right: Box::new(convert_expression(*right)?),
@@ -36,3 +39,10 @@ pub fn convert_binary_operator(op: cel_ast::ArithmeticOp) -> sql_ast::BinaryOper
         _ => panic!("Unsupported binary operator: {:?}", op),
     }
 }
+
+// pub fn convert_function_call(
+//     name: cel_ast::FunctionName,
+//     args: Vec<cel_ast::Expression>,
+// ) -> Result<sql_ast::Expr, Box<dyn std::error::Error>> {
+//     Ok(sql_ast::Expr::FunctionCall(name, args))
+// }

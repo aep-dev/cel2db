@@ -1,0 +1,8 @@
+[package]
+name = "cel2db_py"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cel2db = { path = "../cel2db" }
+pyo3 = { version = "0.23.4", features = ["extension-module"] }

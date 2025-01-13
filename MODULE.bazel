@@ -3,6 +3,9 @@ module(
     version = "0.1",
 )
 bazel_dep(name = "rules_rust", version = "0.56.0")
+bazel_dep(name = "rules_go", version = "0.50.1")
+bazel_dep(name = "rules_python", version = "1.0.0")
+
 
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(edition = "2021")
@@ -18,8 +21,12 @@ crate = use_extension(
     "crate",
 )
 crate.from_cargo(
-    name = "crates",
-    cargo_lockfile = "//:Cargo.lock",
-    manifests = ["//:Cargo.toml"],
+    name = "crates", # this has to map the `use_repo` name.
+    cargo_lockfile = "Cargo.lock",
+    manifests = [
+        "//:Cargo.toml",
+        "//cel2db:Cargo.toml",
+        "//python:Cargo.toml",
+    ]
 )
 use_repo(crate, "crates")

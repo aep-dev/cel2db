@@ -4,6 +4,12 @@ use cel_parser::parse;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 
+pub fn cel_to_db(cel_expr: &str, _sql_dialect: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let cel_ast = parse(cel_expr)?;
+    let sql_ast = convert_expression(cel_ast)?;
+    Ok(sql_ast.to_string())
+}
+
 #[no_mangle]
 pub extern "C" fn cel_to_sql(cel_expr: *const c_char, sql_dialect: *const c_char) -> *mut c_char {
     let cel_str = unsafe {

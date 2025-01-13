@@ -1,9 +1,20 @@
-load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "cel2db_headers",
+    srcs = glob(["src/**/*.h"]),
+)
+
+# if this is a static library, then it cannot be pulled in as a proper
+# crate dependency. Therefore, we will need to introduce a static library that
+# re-exports these.
 rust_library(
     name = "cel2db",
-    aliases = aliases(),
+    crate_name = "cel2db",
+    crate_root = "src/lib.rs",
     srcs = glob(["src/**/*.rs"]),
     edition = "2021",
     deps = all_crate_deps(
@@ -13,6 +24,7 @@ rust_library(
         proc_macro = True,
     ),
 )
+
 
 rust_test(
     name = "cel2db_test",
